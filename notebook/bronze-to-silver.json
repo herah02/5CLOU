@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "61d37f10-85d6-41f9-8e9c-4a9e4f252ab1"
+				"spark.autotune.trackingId": "09e0af3a-9742-4a9e-9001-806153d9c6d0"
 			}
 		},
 		"metadata": {
@@ -52,10 +52,9 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"inputpath = \"2025/11/07\"\n",
-					"inputfile = \"12\""
+					""
 				],
-				"execution_count": null
+				"execution_count": 7
 			},
 			{
 				"cell_type": "code",
@@ -88,10 +87,10 @@
 					"    df_clean\n",
 					"    .write\n",
 					"    .mode(\"overwrite\")\n",
-					"    .parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/{inputpath}/{inputfile}.parquet\")\n",
+					"    .parquet(f\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/{inputpath}/{inputfile}\")\n",
 					")"
 				],
-				"execution_count": null
+				"execution_count": 9
 			}
 		]
 	}
