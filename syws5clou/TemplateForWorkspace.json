@@ -144,7 +144,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/data-ingestion')]",
+			"name": "[concat(parameters('workspaceName'), '/bronze-to-silver')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -165,7 +165,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "e4ae4b0c-9535-420f-b4a3-3d520b47576a"
+						"spark.autotune.trackingId": "88d0050c-e1b9-499c-9d92-1291cf596b39"
 					}
 				},
 				"metadata": {
