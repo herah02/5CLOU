@@ -1,5 +1,5 @@
 {
-	"name": "data-ingestion",
+	"name": "bronze-to-silver",
 	"properties": {
 		"nbformat": 4,
 		"nbformat_minor": 2,
@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "c2a1f51c-b643-421b-81c5-50b8aff0b4c0"
+				"spark.autotune.trackingId": "d223a702-519c-4699-bb63-66170220af06"
 			}
 		},
 		"metadata": {
