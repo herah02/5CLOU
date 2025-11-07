@@ -165,7 +165,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "546a906a-37fa-42e5-8991-1e927e5ce4eb"
+						"spark.autotune.trackingId": "1fc570de-f1c5-4cc1-9cc3-8fce016b1e52"
 					}
 				},
 				"metadata": {
@@ -228,8 +228,7 @@
 							"    df_clean\n",
 							"    .write\n",
 							"    .mode(\"overwrite\")\n",
-							"    .partitionBy(\"year\", \"month\", \"day\", \"hour\")\n",
-							"    .parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/{inputpath}/{inputfile}\")\n",
+							"    .parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/{inputpath}/{inputfile}.parquet\")\n",
 							")"
 						],
 						"outputs": [],
