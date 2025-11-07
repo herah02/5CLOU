@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "df5clou"
+		},
+		"AzureDataLakeStorage5clou_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage5clou_properties_typeProperties_url": {
+			"value": "https://dl5clou.dfs.core.windows.net/"
+		},
+		"RestService5Clou_properties_typeProperties_url": {
+			"value": "https://mastodon.social"
+		},
+		"Trigger_cnw_properties_CopyPipeline_5clou_raw_parameters_windowStart": {
+			"value": "@trigger().scheduledTime"
+		}
+	}
+}

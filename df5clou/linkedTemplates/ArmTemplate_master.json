@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nom de fabrique de données",
+			"defaultValue": "df5clou"
+		},
+		"AzureDataLakeStorage5clou_accountKey": {
+			"type": "secureString",
+			"metadata": "Chaîne sécurisée pour « accountKey » de « AzureDataLakeStorage5clou »"
+		},
+		"AzureDataLakeStorage5clou_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dl5clou.dfs.core.windows.net/"
+		},
+		"RestService5Clou_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://mastodon.social"
+		},
+		"Trigger_cnw_properties_CopyPipeline_5clou_raw_parameters_windowStart": {
+			"type": "string",
+			"defaultValue": "@trigger().scheduledTime"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI pour le compte de stockage contenant des modèles ARM liés"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Jeton SAS pour le compte de stockage contenant des modèles ARM liés"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "df5clou_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage5clou_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage5clou_accountKey')]"
+					},
+					"AzureDataLakeStorage5clou_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage5clou_properties_typeProperties_url')]"
+					},
+					"RestService5Clou_properties_typeProperties_url": {
+						"value": "[parameters('RestService5Clou_properties_typeProperties_url')]"
+					},
+					"Trigger_cnw_properties_CopyPipeline_5clou_raw_parameters_windowStart": {
+						"value": "[parameters('Trigger_cnw_properties_CopyPipeline_5clou_raw_parameters_windowStart')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
