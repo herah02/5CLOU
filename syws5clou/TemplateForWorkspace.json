@@ -165,7 +165,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "1fc570de-f1c5-4cc1-9cc3-8fce016b1e52"
+						"spark.autotune.trackingId": "6283e271-756b-4f11-8583-89831a28a1e9"
 					}
 				},
 				"metadata": {
@@ -205,7 +205,7 @@
 							" \n",
 							"spark = SparkSession.builder.appName(\"BronzeToSilver\").getOrCreate()\n",
 							" \n",
-							"df_raw = spark.read.parquet(\"abfss://dlfs5clou-raw@dl5clou.dfs.core.windows.net/{inputpath}/{inputfile}\")\n",
+							"df_raw = spark.read.parquet(f\"abfss://dlfs5clou-raw@dl5clou.dfs.core.windows.net/{inputpath}/{inputfile}\")\n",
 							" \n",
 							"df_clean = (\n",
 							"    df_raw\n",
