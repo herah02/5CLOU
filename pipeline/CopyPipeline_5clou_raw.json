@@ -1,0 +1,213 @@
+{
+	"name": "CopyPipeline_5clou_raw",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_cnw",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/api/v1/timelines/tag/AI?limit=10"
+					},
+					{
+						"name": "Destination",
+						"value": "dlfs5clou/@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}/@{formatDateTime(pipeline().parameters.windowStart,'HH')}"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
+					"validateDataConsistency": true,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['created_at']"
+								},
+								"sink": {
+									"name": "created_at",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['visibility']"
+								},
+								"sink": {
+									"name": "visibility",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['language']"
+								},
+								"sink": {
+									"name": "language",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['replies_count']"
+								},
+								"sink": {
+									"name": "replies_count",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['reblogs_count']"
+								},
+								"sink": {
+									"name": "reblogs_count",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['favourites_count']"
+								},
+								"sink": {
+									"name": "favourites_count",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['quotes_count']"
+								},
+								"sink": {
+									"name": "quotes_count",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['content']"
+								},
+								"sink": {
+									"name": "content",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['id']"
+								},
+								"sink": {
+									"name": "account_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['username']"
+								},
+								"sink": {
+									"name": "account_username",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['display_name']"
+								},
+								"sink": {
+									"name": "display_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['bot']"
+								},
+								"sink": {
+									"name": "bot",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['group']"
+								},
+								"sink": {
+									"name": "group",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['created_at']"
+								},
+								"sink": {
+									"name": "account_created_at",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_cnw",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_cnw",
+						"type": "DatasetReference",
+						"parameters": {
+							"cw_fileName": "@{formatDateTime(pipeline().parameters.windowStart,'HH')}",
+							"cw_folderPath": "@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-11-07T08:49:42Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

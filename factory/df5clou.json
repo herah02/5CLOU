@@ -1,0 +1,9 @@
+{
+	"name": "df5clou",
+	"location": "francecentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2f805eb1-b93b-492f-9a87-e92403de020c",
+		"tenantId": "1dc8f08a-46f6-4cdb-b8ff-03e46c14979d"
+	}
+}
