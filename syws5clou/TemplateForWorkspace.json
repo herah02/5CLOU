@@ -7,11 +7,6 @@
 			"metadata": "Nom de l'espace de travail",
 			"defaultValue": "syws5clou"
 		},
-		"syws5clou-WorkspaceDefaultSqlServer_connectionString": {
-			"type": "secureString",
-			"metadata": "Chaîne sécurisée pour « connectionString » de « syws5clou-WorkspaceDefaultSqlServer »",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:syws5clou.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
-		},
 		"AzureDataLakeStorage1_accountKey": {
 			"type": "secureString",
 			"metadata": "Chaîne sécurisée pour « accountKey » de « AzureDataLakeStorage1 »"
@@ -20,9 +15,10 @@
 			"type": "secureString",
 			"metadata": "Chaîne sécurisée pour « accountKey » de « AzureDataLakeStorage2 »"
 		},
-		"syws5clou-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://dl5clou.dfs.core.windows.net"
+		"syws5clou-WorkspaceDefaultSqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Chaîne sécurisée pour « connectionString » de « syws5clou-WorkspaceDefaultSqlServer »",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:syws5clou.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -31,6 +27,10 @@
 		"AzureDataLakeStorage2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dl5clou.dfs.core.windows.net/"
+		},
+		"syws5clou-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dl5clou.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -38,19 +38,36 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/default')]",
-			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks",
+			"name": "[concat(parameters('workspaceName'), '/AzureDataLakeStorage1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
-			"properties": {},
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					}
+				}
+			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/WorkspaceSystemIdentity')]",
-			"type": "Microsoft.Synapse/workspaces/credentials",
+			"name": "[concat(parameters('workspaceName'), '/AzureDataLakeStorage2')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
-				"type": "ManagedIdentity",
-				"typeProperties": {}
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					}
+				}
 			},
 			"dependsOn": []
 		},
@@ -98,65 +115,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/AzureDataLakeStorage1')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/AzureDataLakeStorage2')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/sp5clou')]",
-			"type": "Microsoft.Synapse/workspaces/bigDataPools",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"autoPause": {
-					"enabled": true,
-					"delayInMinutes": 15
-				},
-				"autoScale": {
-					"enabled": false,
-					"maxNodeCount": 10,
-					"minNodeCount": 3
-				},
-				"nodeCount": 3,
-				"nodeSize": "Small",
-				"nodeSizeFamily": "MemoryOptimized",
-				"sparkVersion": "3.5",
-				"isComputeIsolationEnabled": false,
-				"sessionLevelPackagesEnabled": false,
-				"annotations": []
-			},
-			"dependsOn": [],
-			"location": "francecentral"
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/AutoResolveIntegrationRuntime')]",
 			"type": "Microsoft.Synapse/workspaces/integrationRuntimes",
 			"apiVersion": "2019-06-01-preview",
@@ -172,6 +130,16 @@
 						}
 					}
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/WorkspaceSystemIdentity')]",
+			"type": "Microsoft.Synapse/workspaces/credentials",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {}
 			},
 			"dependsOn": []
 		},
@@ -197,12 +165,16 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "88d0050c-e1b9-499c-9d92-1291cf596b39"
+						"spark.autotune.trackingId": "6212b3fd-3c0b-4083-8fd0-481e83649c2c"
 					}
 				},
 				"metadata": {
 					"saveOutput": true,
 					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "Synapse PySpark"
+					},
 					"language_info": {
 						"name": "python"
 					},
@@ -213,18 +185,27 @@
 						"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sp5clou",
 						"auth": {
 							"type": "AAD",
-							"authResource": "https://dev.azuresynapse.net",
-							"authHeader": null
+							"authResource": "https://dev.azuresynapse.net"
 						},
 						"sparkVersion": "3.5",
 						"nodeCount": 3,
 						"cores": 4,
 						"memory": 28,
-						"extraHeader": null
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {},
+						"source": [
+							"inputpath = mssparkutils.notebook.exit(f'{inputpath}')\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 3
+					},
 					{
 						"cell_type": "code",
 						"metadata": {},
@@ -267,6 +248,138 @@
 				]
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/silver-to-gold')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "sp5clou",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"runAsWorkspaceSystemIdentity": false,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "e7fa0df7-383d-4e92-a95b-431cdec1ba6f"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"synapse_widget": {
+						"version": "0.1"
+					},
+					"enableDebugMode": false,
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/9230ca48-750c-4d03-a5c6-a58d6d6db49c/resourceGroups/5CLOU/providers/Microsoft.Synapse/workspaces/syws5clou/bigDataPools/sp5clou",
+						"name": "sp5clou",
+						"type": "Spark",
+						"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sp5clou",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net",
+							"authHeader": null
+						},
+						"sparkVersion": "3.5",
+						"nodeCount": 3,
+						"cores": 4,
+						"memory": 28,
+						"extraHeader": null
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"source": [
+							"from pyspark.sql import functions as F\n",
+							"df = spark.read.parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/\")\n",
+							"df_active_users = (\n",
+							"    df.groupBy(\"account_id\")\n",
+							"      .agg(F.count(\"*\").alias(\"toots_count\"))\n",
+							"      .orderBy(F.desc(\"toots_count\"))\n",
+							")\n",
+							"df_active_users.write.mode(\"overwrite\").parquet(\n",
+							"    \"abfss://dlfs5clou-analytics@dl5clou.dfs.core.windows.net/active_users/\")\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 2
+					},
+					{
+						"cell_type": "code",
+						"source": [
+							"\n",
+							"df_total_toots = (\n",
+							"    df.groupBy(\"year\", \"month\", \"day\")\n",
+							"      .agg(F.count(\"*\").alias(\"total_toots\"))\n",
+							"      .orderBy(\"year\", \"month\", \"day\")\n",
+							")\n",
+							"df_total_toots.write.mode(\"overwrite\").parquet(\"abfss://dlfs5clou-analytics@dl5clou.dfs.core.windows.net/total_toots_per_day/\")"
+						],
+						"outputs": [],
+						"execution_count": 3
+					},
+					{
+						"cell_type": "code",
+						"source": [
+							"from pyspark.sql.functions import explode, regexp_extract, split\n",
+							"# Extraire les hashtags\n",
+							"df_hashtags = (\n",
+							"    df.withColumn(\"hashtags\", split(regexp_extract(col(\"content_lower\"), r'#\\w+', 0), ' '))\n",
+							"    .withColumn(\"hashtag\", explode(col(\"hashtags\")))\n",
+							"    .groupBy(\"hashtag\")\n",
+							"    .agg(F.count(\"*\").alias(\"count\"))\n",
+							"    .orderBy(F.desc(\"count\"))\n",
+							")\n",
+							"\n",
+							"df_hashtags.write.mode(\"overwrite\").parquet(\n",
+							"    \"abfss://dlfs5clou-analytics@dl5clou.dfs.core.windows.net/trending_hashtags/\")"
+						],
+						"outputs": [],
+						"execution_count": 10
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/sp5clou')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"autoPause": {
+					"enabled": true,
+					"delayInMinutes": 15
+				},
+				"autoScale": {
+					"enabled": false,
+					"maxNodeCount": 10,
+					"minNodeCount": 3
+				},
+				"nodeCount": 3,
+				"nodeSize": "Small",
+				"nodeSizeFamily": "MemoryOptimized",
+				"sparkVersion": "3.5",
+				"isComputeIsolationEnabled": false,
+				"sessionLevelPackagesEnabled": false,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "francecentral"
 		}
 	]
 }
