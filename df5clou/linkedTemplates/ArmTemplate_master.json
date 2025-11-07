@@ -15,6 +15,10 @@
 			"type": "string",
 			"defaultValue": "https://dl5clou.dfs.core.windows.net/"
 		},
+		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+			"type": "string",
+			"defaultValue": "https://syws5clou.dev.azuresynapse.net"
+		},
 		"RestService5Clou_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://mastodon.social"
@@ -55,6 +59,9 @@
 					},
 					"AzureDataLakeStorage5clou_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage5clou_properties_typeProperties_url')]"
+					},
+					"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+						"value": "[parameters('AzureSynapseArtifacts1_properties_typeProperties_endpoint')]"
 					},
 					"RestService5Clou_properties_typeProperties_url": {
 						"value": "[parameters('RestService5Clou_properties_typeProperties_url')]"

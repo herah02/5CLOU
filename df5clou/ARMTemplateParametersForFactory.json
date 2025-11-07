@@ -11,6 +11,9 @@
 		"AzureDataLakeStorage5clou_properties_typeProperties_url": {
 			"value": "https://dl5clou.dfs.core.windows.net/"
 		},
+		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+			"value": "https://syws5clou.dev.azuresynapse.net"
+		},
 		"RestService5Clou_properties_typeProperties_url": {
 			"value": "https://mastodon.social"
 		},

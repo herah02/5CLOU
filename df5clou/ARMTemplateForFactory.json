@@ -15,6 +15,10 @@
 			"type": "string",
 			"defaultValue": "https://dl5clou.dfs.core.windows.net/"
 		},
+		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+			"type": "string",
+			"defaultValue": "https://syws5clou.dev.azuresynapse.net"
+		},
 		"RestService5Clou_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://mastodon.social"
@@ -37,7 +41,20 @@
 					{
 						"name": "Copy_cnw",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Set variable2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -227,11 +244,107 @@
 								"referenceName": "DestinationDataset_cnw",
 								"type": "DatasetReference",
 								"parameters": {
-									"cw_fileName": "@{formatDateTime(pipeline().parameters.windowStart,'HH')}",
-									"cw_folderPath": "@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}"
+									"cw_fileName": {
+										"value": "@variables('pip-hour')",
+										"type": "Expression"
+									},
+									"cw_folderPath": {
+										"value": "@variables('pip-timestamp')",
+										"type": "Expression"
+									}
 								}
 							}
 						]
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "pip-timestamp",
+							"value": "@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}"
+						}
+					},
+					{
+						"name": "Set variable2",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "pip-hour",
+							"value": "@{formatDateTime(pipeline().parameters.windowStart,'HH')}"
+						}
+					},
+					{
+						"name": "Notebook1",
+						"type": "SynapseNotebook",
+						"dependsOn": [
+							{
+								"activity": "Copy_cnw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebook": {
+								"referenceName": {
+									"value": "bronze-to-silver",
+									"type": "Expression"
+								},
+								"type": "NotebookReference"
+							},
+							"parameters": {
+								"inputpath": {
+									"value": {
+										"value": "@variables('pip-timestamp')",
+										"type": "Expression"
+									},
+									"type": "string"
+								},
+								"inputfile": {
+									"value": {
+										"value": "@variables('pip-hour')",
+										"type": "Expression"
+									},
+									"type": "string"
+								}
+							},
+							"snapshot": true,
+							"sparkPool": {
+								"referenceName": {
+									"value": "sp5clou",
+									"type": "Expression"
+								},
+								"type": "BigDataPoolReference"
+							},
+							"executorSize": "Small",
+							"conf": {
+								"spark.dynamicAllocation.enabled": false
+							},
+							"driverSize": "Small"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSynapseArtifacts1",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -242,12 +355,21 @@
 						"type": "String"
 					}
 				},
+				"variables": {
+					"pip-timestamp": {
+						"type": "String"
+					},
+					"pip-hour": {
+						"type": "String"
+					}
+				},
 				"annotations": [],
 				"lastPublishTime": "2025-11-07T08:49:42Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceDataset_cnw')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_cnw')]"
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_cnw')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseArtifacts1')]"
 			]
 		},
 		{
@@ -323,6 +445,21 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureDataLakeStorage5clou_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseArtifacts1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSynapseArtifacts",
+				"typeProperties": {
+					"endpoint": "[parameters('AzureSynapseArtifacts1_properties_typeProperties_endpoint')]",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/9230ca48-750c-4d03-a5c6-a58d6d6db49c/resourceGroups/5CLOU/providers/Microsoft.Synapse/workspaces/syws5clou"
 				}
 			},
 			"dependsOn": []
