@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "08046bcc-7e2b-48cb-b4dd-d262bebbff3d"
+				"spark.autotune.trackingId": "d29ae35e-c37b-4a69-a4d6-3a985a3abcb2"
 			}
 		},
 		"metadata": {
@@ -65,7 +65,7 @@
 					" \n",
 					"spark = SparkSession.builder.appName(\"BronzeToSilver\").getOrCreate()\n",
 					" \n",
-					"df_raw = spark.read.option(\"recursiveFileLookup\", \"true\").parquet(\"abfss://dlfs5clou-raw@dl5clou.dfs.core.windows.net/\")\n",
+					"df_raw = spark.read.parquet(\"abfss://dlfs5clou-raw@dl5clou.dfs.core.windows.net/{inputpath}/{inputfile}\")\n",
 					" \n",
 					"df_clean = (\n",
 					"    df_raw\n",
@@ -89,7 +89,7 @@
 					"    .write\n",
 					"    .mode(\"overwrite\")\n",
 					"    .partitionBy(\"year\", \"month\", \"day\", \"hour\")\n",
-					"    .parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean\")\n",
+					"    .parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/{inputpath}/{inputfile}\")\n",
 					")"
 				],
 				"execution_count": 11
