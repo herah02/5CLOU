@@ -18,15 +18,16 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "90164e31-1d83-4133-8536-699a2d1bdd8c"
+				"spark.autotune.trackingId": "c2a1f51c-b643-421b-81c5-50b8aff0b4c0"
 			}
 		},
 		"metadata": {
 			"saveOutput": true,
-			"synapse_widget": {
-				"version": "0.1"
-			},
 			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
 			"language_info": {
 				"name": "python"
 			},
@@ -37,14 +38,13 @@
 				"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sp5clou",
 				"auth": {
 					"type": "AAD",
-					"authResource": "https://dev.azuresynapse.net",
-					"authHeader": null
+					"authResource": "https://dev.azuresynapse.net"
 				},
 				"sparkVersion": "3.5",
 				"nodeCount": 3,
 				"cores": 4,
 				"memory": 28,
-				"extraHeader": null
+				"automaticScaleJobs": false
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -59,7 +59,6 @@
 					" \n",
 					"df_raw = spark.read.option(\"recursiveFileLookup\", \"true\").parquet(\"abfss://dlfs5clou-raw@dl5clou.dfs.core.windows.net/\")\n",
 					" \n",
-					"# Nettoyage de base\n",
 					"df_clean = (\n",
 					"    df_raw\n",
 					"    .dropDuplicates()\n",
@@ -69,7 +68,6 @@
 					"    .withColumn(\"timestamp\", to_timestamp(col(\"created_at\")))\n",
 					")\n",
 					" \n",
-					"# Extraction des colonnes temporelles\n",
 					"df_clean = (\n",
 					"    df_clean\n",
 					"    .withColumn(\"year\", year(col(\"timestamp\")))\n",
@@ -78,7 +76,6 @@
 					"    .withColumn(\"hour\", hour(col(\"timestamp\")))\n",
 					")\n",
 					" \n",
-					"# Écriture en Silver (Parquet partitionné)\n",
 					"(\n",
 					"    df_clean\n",
 					"    .write\n",
