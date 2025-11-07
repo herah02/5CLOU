@@ -165,7 +165,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "6283e271-756b-4f11-8583-89831a28a1e9"
+						"spark.autotune.trackingId": "a396fdc4-a984-4581-8414-2542ad247c9c"
 					}
 				},
 				"metadata": {
@@ -200,6 +200,15 @@
 						"cell_type": "code",
 						"metadata": {},
 						"source": [
+							""
+						],
+						"outputs": [],
+						"execution_count": 7
+					},
+					{
+						"cell_type": "code",
+						"metadata": {},
+						"source": [
 							"from pyspark.sql import SparkSession\n",
 							"from pyspark.sql.functions import col, lower, trim, regexp_replace, to_timestamp, year, month, dayofmonth, hour\n",
 							" \n",
@@ -228,11 +237,11 @@
 							"    df_clean\n",
 							"    .write\n",
 							"    .mode(\"overwrite\")\n",
-							"    .parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/{inputpath}/{inputfile}.parquet\")\n",
+							"    .parquet(f\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/{inputpath}/{inputfile}\")\n",
 							")"
 						],
 						"outputs": [],
-						"execution_count": 11
+						"execution_count": 9
 					}
 				]
 			},
