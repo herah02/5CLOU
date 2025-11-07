@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "09e0af3a-9742-4a9e-9001-806153d9c6d0"
+				"spark.autotune.trackingId": "e86c9bd6-5ac3-480c-9684-ba696d07834a"
 			}
 		},
 		"metadata": {
@@ -54,7 +54,7 @@
 				"source": [
 					""
 				],
-				"execution_count": 7
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -90,7 +90,7 @@
 					"    .parquet(f\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/{inputpath}/{inputfile}\")\n",
 					")"
 				],
-				"execution_count": 9
+				"execution_count": 10
 			}
 		]
 	}
