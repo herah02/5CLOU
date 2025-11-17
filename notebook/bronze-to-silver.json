@@ -4,7 +4,7 @@
 		"nbformat": 4,
 		"nbformat_minor": 2,
 		"bigDataPool": {
-			"referenceName": "sp5clou",
+			"referenceName": "poolperso",
 			"type": "BigDataPoolReference"
 		},
 		"sessionProperties": {
@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "faceb978-249b-4abd-ac2e-2474261b06b9"
+				"spark.autotune.trackingId": "48a0d855-1c09-4e4e-9ca0-159340ae0876"
 			}
 		},
 		"metadata": {
@@ -32,16 +32,16 @@
 				"name": "python"
 			},
 			"a365ComputeOptions": {
-				"id": "/subscriptions/9230ca48-750c-4d03-a5c6-a58d6d6db49c/resourceGroups/5CLOU/providers/Microsoft.Synapse/workspaces/syws5clou/bigDataPools/sp5clou",
-				"name": "sp5clou",
+				"id": "/subscriptions/9230ca48-750c-4d03-a5c6-a58d6d6db49c/resourceGroups/5CLOU/providers/Microsoft.Synapse/workspaces/syws5clou/bigDataPools/poolperso",
+				"name": "poolperso",
 				"type": "Spark",
-				"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sp5clou",
+				"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/poolperso",
 				"auth": {
 					"type": "AAD",
 					"authResource": "https://dev.azuresynapse.net"
 				},
 				"sparkVersion": "3.5",
-				"nodeCount": 3,
+				"nodeCount": 10,
 				"cores": 4,
 				"memory": 28,
 				"automaticScaleJobs": false
