@@ -33,11 +33,11 @@
 					"executorSize": "Small",
 					"conf": {
 						"spark.dynamicAllocation.enabled": false,
-						"spark.dynamicAllocation.minExecutors": 3,
-						"spark.dynamicAllocation.maxExecutors": 3
+						"spark.dynamicAllocation.minExecutors": 1,
+						"spark.dynamicAllocation.maxExecutors": 1
 					},
 					"driverSize": "Small",
-					"numExecutors": 3
+					"numExecutors": 1
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseArtifacts1",
