@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "adfb1c32-60c2-4b2d-b34b-9b6c97d04681"
+				"spark.autotune.trackingId": "b609ba9b-f362-4513-82e0-fd06567fa546"
 			}
 		},
 		"metadata": {
@@ -53,7 +53,7 @@
 				"cell_type": "code",
 				"source": [
 					"from pyspark.sql import functions as F\n",
-					"df = spark.read.parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/\")\n",
+					"df = spark.read.option(\"recursiveFileLookup\", \"true\").parquet(f\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/\")\n",
 					"df_active_users = (\n",
 					"    df.groupBy(\"account_id\")\n",
 					"      .agg(F.count(\"*\").alias(\"toots_count\"))\n",
