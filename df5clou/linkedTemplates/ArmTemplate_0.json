@@ -374,7 +374,10 @@
 						"userProperties": [],
 						"typeProperties": {
 							"variableName": "pip-timestamp",
-							"value": "@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}"
+							"value": {
+								"value": "@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}",
+								"type": "Expression"
+							}
 						}
 					},
 					{
@@ -388,11 +391,14 @@
 						"userProperties": [],
 						"typeProperties": {
 							"variableName": "pip-hour",
-							"value": "@{formatDateTime(pipeline().parameters.windowStart,'HH')}"
+							"value": {
+								"value": "@{formatDateTime(pipeline().parameters.windowStart,'HH')}",
+								"type": "Expression"
+							}
 						}
 					},
 					{
-						"name": "Notebook1",
+						"name": "Bronze to silver",
 						"type": "SynapseNotebook",
 						"dependsOn": [
 							{
@@ -451,6 +457,121 @@
 						"linkedServiceName": {
 							"referenceName": "AzureSynapseArtifacts1",
 							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "silver to gold",
+						"type": "SynapseNotebook",
+						"dependsOn": [
+							{
+								"activity": "Bronze to silver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebook": {
+								"referenceName": {
+									"value": "silver-to-gold",
+									"type": "Expression"
+								},
+								"type": "NotebookReference"
+							},
+							"snapshot": true,
+							"sparkPool": {
+								"referenceName": {
+									"value": "sp5clou",
+									"type": "Expression"
+								},
+								"type": "BigDataPoolReference"
+							},
+							"executorSize": "Small",
+							"conf": {
+								"spark.dynamicAllocation.enabled": false
+							},
+							"driverSize": "Small"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSynapseArtifacts1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Fail import data",
+						"type": "Fail",
+						"dependsOn": [
+							{
+								"activity": "Copy_cnw",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"message": {
+								"value": "@activity('Copy_cnw').output.error.message",
+								"type": "Expression"
+							},
+							"errorCode": {
+								"value": "@activity('Copy_cnw').output.error.code",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Fail bronze to silver",
+						"type": "Fail",
+						"dependsOn": [
+							{
+								"activity": "Bronze to silver",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"message": {
+								"value": "@activity('Bronze to silver').output.error.code",
+								"type": "Expression"
+							},
+							"errorCode": {
+								"value": "@activity('Bronze to silver').output.error.message",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Fail silver to gold",
+						"type": "Fail",
+						"dependsOn": [
+							{
+								"activity": "silver to gold",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"message": {
+								"value": "@activity('silver to gold').output.error.code",
+								"type": "Expression"
+							},
+							"errorCode": {
+								"value": "@activity('silver to gold').output.error.message",
+								"type": "Expression"
+							}
 						}
 					}
 				],
