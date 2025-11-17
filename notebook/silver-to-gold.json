@@ -12,13 +12,13 @@
 			"driverCores": 4,
 			"executorMemory": "28g",
 			"executorCores": 4,
-			"numExecutors": 2,
-			"runAsWorkspaceSystemIdentity": false,
+			"numExecutors": 1,
+			"runAsWorkspaceSystemIdentity": true,
 			"conf": {
 				"spark.dynamicAllocation.enabled": "false",
-				"spark.dynamicAllocation.minExecutors": "2",
-				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "b609ba9b-f362-4513-82e0-fd06567fa546"
+				"spark.dynamicAllocation.minExecutors": "1",
+				"spark.dynamicAllocation.maxExecutors": "1",
+				"spark.autotune.trackingId": "91aef7e9-ed11-4716-92ee-ace61dfc9223"
 			}
 		},
 		"metadata": {
@@ -44,7 +44,7 @@
 				"nodeCount": 3,
 				"cores": 4,
 				"memory": 28,
-				"automaticScaleJobs": false
+				"automaticScaleJobs": true
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -65,7 +65,7 @@
 					"    .mode(\"overwrite\") \\\n",
 					"    .saveAsTable(\"Database1.active_users\")"
 				],
-				"execution_count": 14
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -81,7 +81,7 @@
 					"    .mode(\"overwrite\") \\\n",
 					"    .saveAsTable(\"Database1.total_toots_per_day\")"
 				],
-				"execution_count": 15
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -103,7 +103,7 @@
 					"    .saveAsTable(\"Database1.trending_hashtags\")\n",
 					""
 				],
-				"execution_count": 17
+				"execution_count": null
 			}
 		]
 	}
