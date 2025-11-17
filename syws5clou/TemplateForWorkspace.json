@@ -280,7 +280,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "95bd6e34-6ea9-454e-95cd-f5521b2267d9"
+						"spark.autotune.trackingId": "9b559bab-5c06-45a5-a0f4-fb00eade60a2"
 					}
 				},
 				"metadata": {
@@ -315,15 +315,6 @@
 						"cell_type": "code",
 						"metadata": {},
 						"source": [
-							""
-						],
-						"outputs": [],
-						"execution_count": null
-					},
-					{
-						"cell_type": "code",
-						"metadata": {},
-						"source": [
 							"from pyspark.sql import functions as F\n",
 							"df = spark.read.parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/\")\n",
 							"df_active_users = (\n",
@@ -331,8 +322,6 @@
 							"      .agg(F.count(\"*\").alias(\"toots_count\"))\n",
 							"      .orderBy(F.desc(\"toots_count\"))\n",
 							")\n",
-							"df_active_users.write.mode(\"overwrite\").parquet(\n",
-							"    \"abfss://dlfs5clou-analytics@dl5clou.dfs.core.windows.net/active_users/\")\n",
 							"\n",
 							"df_active_users.write \\\n",
 							"    .format(\"delta\") \\\n",
@@ -340,7 +329,7 @@
 							"    .saveAsTable(\"Database1.active_users\")"
 						],
 						"outputs": [],
-						"execution_count": 9
+						"execution_count": 14
 					},
 					{
 						"cell_type": "code",
@@ -352,16 +341,19 @@
 							"      .agg(F.count(\"*\").alias(\"total_toots\"))\n",
 							"      .orderBy(\"year\", \"month\", \"day\")\n",
 							")\n",
-							"df_total_toots.write.mode(\"overwrite\").parquet(\"abfss://dlfs5clou-analytics@dl5clou.dfs.core.windows.net/total_toots_per_day/\")"
+							"df_total_toots.write \\\n",
+							"    .format(\"delta\") \\\n",
+							"    .mode(\"overwrite\") \\\n",
+							"    .saveAsTable(\"Database1.total_toots_per_day\")"
 						],
 						"outputs": [],
-						"execution_count": 3
+						"execution_count": 15
 					},
 					{
 						"cell_type": "code",
 						"metadata": {},
 						"source": [
-							"from pyspark.sql.functions import explode, regexp_extract, split\n",
+							"from pyspark.sql.functions import explode, regexp_extract, split, col\n",
 							"# Extraire les hashtags\n",
 							"df_hashtags = (\n",
 							"    df.withColumn(\"hashtags\", split(regexp_extract(col(\"content_lower\"), r'#\\w+', 0), ' '))\n",
@@ -371,21 +363,25 @@
 							"    .orderBy(F.desc(\"count\"))\n",
 							")\n",
 							"\n",
-							"df_hashtags.write.mode(\"overwrite\").parquet(\n",
-							"    \"abfss://dlfs5clou-analytics@dl5clou.dfs.core.windows.net/trending_hashtags/\")"
+							"\n",
+							"df_hashtags.write \\\n",
+							"    .format(\"delta\") \\\n",
+							"    .mode(\"overwrite\") \\\n",
+							"    .saveAsTable(\"Database1.trending_hashtags\")\n",
+							""
 						],
 						"outputs": [],
-						"execution_count": 10
+						"execution_count": 17
 					},
 					{
 						"cell_type": "code",
 						"metadata": {},
 						"source": [
 							"spark.sql(\"SHOW TABLES IN Database1\").show()\n",
-							""
+							"spark.sql(\"SELECT * FROM Database1.active_users LIMIT 10;\").show()"
 						],
 						"outputs": [],
-						"execution_count": 10
+						"execution_count": 18
 					}
 				]
 			},
