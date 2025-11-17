@@ -301,12 +301,12 @@
 					"executorMemory": "28g",
 					"executorCores": 4,
 					"numExecutors": 1,
-					"runAsWorkspaceSystemIdentity": true,
+					"runAsWorkspaceSystemIdentity": false,
 					"conf": {
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "1",
-						"spark.autotune.trackingId": "9f735b86-20b0-4588-bfc2-090b044421c0"
+						"spark.autotune.trackingId": "299383a8-f27c-449d-986e-16013e428523"
 					}
 				},
 				"metadata": {
@@ -331,15 +331,13 @@
 						"sparkVersion": "3.5",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": true
+						"memory": 28
 					},
-					"sessionKeepAliveTimeout": 30
+					"sessionKeepAliveTimeout": 1
 				},
 				"cells": [
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"from pyspark.sql import functions as F\n",
 							"df = spark.read.option(\"recursiveFileLookup\", \"true\").parquet(f\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/\")\n",
@@ -359,7 +357,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"\n",
 							"df_total_toots = (\n",
@@ -377,7 +374,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"from pyspark.sql.functions import explode, regexp_extract, split, col\n",
 							"# Extraire les hashtags\n",
@@ -448,7 +444,7 @@
 					"delayInMinutes": 15
 				},
 				"autoScale": {
-					"enabled": true,
+					"enabled": false,
 					"maxNodeCount": 20,
 					"minNodeCount": 3
 				},
