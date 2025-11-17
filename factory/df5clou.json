@@ -1,5 +1,11 @@
 {
 	"name": "df5clou",
+	"properties": {
+		"globalConfigurations": {
+			"factoryStagingLSReferenceName": "AzureDataLakeStorage5clou",
+			"factoryStagingLSType": "LinkedServiceReference"
+		}
+	},
 	"location": "francecentral",
 	"identity": {
 		"type": "SystemAssigned",
