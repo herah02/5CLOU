@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "8043800f-69ac-414e-b16d-af8ab3aff9e8"
+				"spark.autotune.trackingId": "503a7ba7-1716-445d-9084-9ae1e86008a9"
 			}
 		},
 		"metadata": {
@@ -74,7 +74,7 @@
 					"    .mode(\"overwrite\") \\\n",
 					"    .saveAsTable(\"Database1.active_users\")"
 				],
-				"execution_count": 3
+				"execution_count": 9
 			},
 			{
 				"cell_type": "code",
@@ -110,9 +110,10 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"spark.sql(\"SHOW DATABASES\").show()"
+					"spark.sql(\"SHOW TABLES IN Database1\").show()\n",
+					""
 				],
-				"execution_count": 4
+				"execution_count": 10
 			}
 		]
 	}
