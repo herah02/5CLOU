@@ -336,7 +336,7 @@
 							"snapshot": true,
 							"sparkPool": {
 								"referenceName": {
-									"value": "poolperso",
+									"value": "sp5clou",
 									"type": "Expression"
 								},
 								"type": "BigDataPoolReference"
@@ -382,7 +382,7 @@
 							"snapshot": true,
 							"sparkPool": {
 								"referenceName": {
-									"value": "poolperso",
+									"value": "sp5clou",
 									"type": "Expression"
 								},
 								"type": "BigDataPoolReference"
