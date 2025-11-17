@@ -305,7 +305,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "1",
-						"spark.autotune.trackingId": "9cab3263-9cd5-473e-9c17-50cd2b32b5ea"
+						"spark.autotune.trackingId": "7ba90933-b535-4c77-b76a-00823ce748a5"
 					}
 				},
 				"metadata": {
@@ -356,7 +356,7 @@
 							"    .saveAsTable(\"Database1.active_users\")"
 						],
 						"outputs": [],
-						"execution_count": 23
+						"execution_count": 28
 					},
 					{
 						"cell_type": "code",
@@ -374,7 +374,7 @@
 							"    .saveAsTable(\"Database1.total_toots_per_day\")"
 						],
 						"outputs": [],
-						"execution_count": 26
+						"execution_count": 29
 					},
 					{
 						"cell_type": "code",
@@ -398,7 +398,7 @@
 							""
 						],
 						"outputs": [],
-						"execution_count": 27
+						"execution_count": 30
 					}
 				]
 			},
