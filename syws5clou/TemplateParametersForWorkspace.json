@@ -5,20 +5,8 @@
 		"workspaceName": {
 			"value": "syws5clou"
 		},
-		"AzureDataLakeStorage1_accountKey": {
-			"value": ""
-		},
-		"AzureDataLakeStorage2_accountKey": {
-			"value": ""
-		},
 		"syws5clou-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:syws5clou.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"value": "https://dl5clou.dfs.core.windows.net/"
-		},
-		"AzureDataLakeStorage2_properties_typeProperties_url": {
-			"value": "https://dl5clou.dfs.core.windows.net/"
 		},
 		"syws5clou-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://dl5clou.dfs.core.windows.net"
