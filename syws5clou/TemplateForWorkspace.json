@@ -38,6 +38,15 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('workspaceName'), '/poolperso')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/AzureDataLakeStorage1')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -171,7 +180,7 @@
 				"nbformat": 4,
 				"nbformat_minor": 2,
 				"bigDataPool": {
-					"referenceName": "poolperso",
+					"referenceName": "sp5clou",
 					"type": "BigDataPoolReference"
 				},
 				"sessionProperties": {
@@ -185,7 +194,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "2971cf74-7a9e-45f8-8a49-08f00b9092d5"
+						"spark.autotune.trackingId": "bdcfa3c9-9149-4adb-a359-7b00f9c62360"
 					}
 				},
 				"metadata": {
@@ -199,16 +208,16 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/9230ca48-750c-4d03-a5c6-a58d6d6db49c/resourceGroups/5CLOU/providers/Microsoft.Synapse/workspaces/syws5clou/bigDataPools/poolperso",
-						"name": "poolperso",
+						"id": "/subscriptions/9230ca48-750c-4d03-a5c6-a58d6d6db49c/resourceGroups/5CLOU/providers/Microsoft.Synapse/workspaces/syws5clou/bigDataPools/sp5clou",
+						"name": "sp5clou",
 						"type": "Spark",
-						"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/poolperso",
+						"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sp5clou",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
 						},
 						"sparkVersion": "3.5",
-						"nodeCount": 10,
+						"nodeCount": 3,
 						"cores": 4,
 						"memory": 28,
 						"automaticScaleJobs": false
@@ -222,6 +231,9 @@
 						"source": [
 							"from pyspark.sql import SparkSession\n",
 							"from pyspark.sql.functions import col, lower, trim, regexp_replace, to_timestamp, year, month, dayofmonth, hour\n",
+							"\n",
+							"dbutils.fs.ls(\"abfss://dlfs5clou-raw@dl5clou.dfs.core.windows.net/\")\n",
+							"\n",
 							" \n",
 							"spark = SparkSession.builder.appName(\"BronzeToSilver\").getOrCreate()\n",
 							" \n",
