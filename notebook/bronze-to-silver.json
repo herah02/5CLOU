@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "1",
 				"spark.dynamicAllocation.maxExecutors": "1",
-				"spark.autotune.trackingId": "109e41f4-9b31-481d-8f17-6b16cdc8aab3"
+				"spark.autotune.trackingId": "34aa156e-5705-4e12-a5c0-a88ff5b10076"
 			}
 		},
 		"metadata": {
@@ -44,9 +44,9 @@
 				"nodeCount": 3,
 				"cores": 4,
 				"memory": 28,
-				"automaticScaleJobs": true
+				"automaticScaleJobs": false
 			},
-			"sessionKeepAliveTimeout": 30
+			"sessionKeepAliveTimeout": 2
 		},
 		"cells": [
 			{
@@ -82,11 +82,10 @@
 					"    df_clean\n",
 					"    .write\n",
 					"    .mode(\"overwrite\")\n",
-					"    .partitionBy(\"year\", \"month\", \"day\")\n",
 					"    .parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/\")\n",
 					")"
 				],
-				"execution_count": null
+				"execution_count": 4
 			}
 		]
 	}
