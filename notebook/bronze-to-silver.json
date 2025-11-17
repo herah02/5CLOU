@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "5d4c9104-b6ad-45fb-bc45-bebb8c667e51"
+				"spark.autotune.trackingId": "b3415810-8e62-4418-9072-c8c3dcf6a108"
 			}
 		},
 		"metadata": {
@@ -54,8 +54,6 @@
 				"source": [
 					"from pyspark.sql import SparkSession\n",
 					"from pyspark.sql.functions import col, lower, trim, regexp_replace, to_timestamp, year, month, dayofmonth, hour\n",
-					"\n",
-					"dbutils.fs.ls(\"abfss://dlfs5clou-raw@dl5clou.dfs.core.windows.net/\")\n",
 					"\n",
 					" \n",
 					"spark = SparkSession.builder.appName(\"BronzeToSilver\").getOrCreate()\n",
