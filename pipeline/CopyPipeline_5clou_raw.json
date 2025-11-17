@@ -299,14 +299,14 @@
 					"snapshot": true,
 					"sparkPool": {
 						"referenceName": {
-							"value": "sp5clou",
+							"value": "poolperso",
 							"type": "Expression"
 						},
 						"type": "BigDataPoolReference"
 					},
 					"executorSize": "Small",
 					"conf": {
-						"spark.dynamicAllocation.enabled": false
+						"spark.dynamicAllocation.enabled": true
 					},
 					"driverSize": "Small"
 				},
@@ -345,7 +345,7 @@
 					"snapshot": true,
 					"sparkPool": {
 						"referenceName": {
-							"value": "sp5clou",
+							"value": "poolperso",
 							"type": "Expression"
 						},
 						"type": "BigDataPoolReference"
