@@ -25,19 +25,16 @@
 					"snapshot": true,
 					"sparkPool": {
 						"referenceName": {
-							"value": "sp5clou",
+							"value": "poolperso",
 							"type": "Expression"
 						},
 						"type": "BigDataPoolReference"
 					},
 					"executorSize": "Small",
 					"conf": {
-						"spark.dynamicAllocation.enabled": false,
-						"spark.dynamicAllocation.minExecutors": 1,
-						"spark.dynamicAllocation.maxExecutors": 1
+						"spark.dynamicAllocation.enabled": true
 					},
-					"driverSize": "Small",
-					"numExecutors": 1
+					"driverSize": "Small"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseArtifacts1",
