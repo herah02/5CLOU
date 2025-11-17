@@ -18,15 +18,16 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "e7fa0df7-383d-4e92-a95b-431cdec1ba6f"
+				"spark.autotune.trackingId": "8043800f-69ac-414e-b16d-af8ab3aff9e8"
 			}
 		},
 		"metadata": {
 			"saveOutput": true,
-			"synapse_widget": {
-				"version": "0.1"
-			},
 			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
 			"language_info": {
 				"name": "python"
 			},
@@ -37,18 +38,24 @@
 				"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sp5clou",
 				"auth": {
 					"type": "AAD",
-					"authResource": "https://dev.azuresynapse.net",
-					"authHeader": null
+					"authResource": "https://dev.azuresynapse.net"
 				},
 				"sparkVersion": "3.5",
 				"nodeCount": 3,
 				"cores": 4,
 				"memory": 28,
-				"extraHeader": null
+				"automaticScaleJobs": false
 			},
 			"sessionKeepAliveTimeout": 30
 		},
 		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					""
+				],
+				"execution_count": null
+			},
 			{
 				"cell_type": "code",
 				"source": [
@@ -61,9 +68,13 @@
 					")\n",
 					"df_active_users.write.mode(\"overwrite\").parquet(\n",
 					"    \"abfss://dlfs5clou-analytics@dl5clou.dfs.core.windows.net/active_users/\")\n",
-					""
+					"\n",
+					"df_active_users.write \\\n",
+					"    .format(\"delta\") \\\n",
+					"    .mode(\"overwrite\") \\\n",
+					"    .saveAsTable(\"Database1.active_users\")"
 				],
-				"execution_count": 2
+				"execution_count": 3
 			},
 			{
 				"cell_type": "code",
@@ -95,6 +106,13 @@
 					"    \"abfss://dlfs5clou-analytics@dl5clou.dfs.core.windows.net/trending_hashtags/\")"
 				],
 				"execution_count": 10
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"spark.sql(\"SHOW DATABASES\").show()"
+				],
+				"execution_count": 4
 			}
 		]
 	}
