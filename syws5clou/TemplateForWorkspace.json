@@ -61,6 +61,48 @@
 								"type": "MSI"
 							}
 						}
+					},
+					{
+						"name": "Notebook2",
+						"type": "SynapseNotebook",
+						"dependsOn": [
+							{
+								"activity": "Notebook1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebook": {
+								"referenceName": "silver-to-gold",
+								"type": "NotebookReference"
+							},
+							"snapshot": true,
+							"sparkPool": {
+								"referenceName": "sp5clou",
+								"type": "BigDataPoolReference"
+							},
+							"executorSize": "Small",
+							"conf": {
+								"spark.dynamicAllocation.enabled": false,
+								"spark.dynamicAllocation.minExecutors": 1,
+								"spark.dynamicAllocation.maxExecutors": 1
+							},
+							"driverSize": "Small",
+							"numExecutors": 1,
+							"authentication": {
+								"type": "MSI"
+							}
+						}
 					}
 				],
 				"policy": {
@@ -70,7 +112,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/notebooks/bronze-to-silver')]",
-				"[concat(variables('workspaceId'), '/bigDataPools/sp5clou')]"
+				"[concat(variables('workspaceId'), '/bigDataPools/sp5clou')]",
+				"[concat(variables('workspaceId'), '/notebooks/silver-to-gold')]"
 			]
 		},
 		{
@@ -153,7 +196,7 @@
 				"nbformat": 4,
 				"nbformat_minor": 2,
 				"bigDataPool": {
-					"referenceName": "poolperso",
+					"referenceName": "sp5clou",
 					"type": "BigDataPoolReference"
 				},
 				"sessionProperties": {
@@ -162,12 +205,12 @@
 					"executorMemory": "28g",
 					"executorCores": 4,
 					"numExecutors": 1,
-					"runAsWorkspaceSystemIdentity": true,
+					"runAsWorkspaceSystemIdentity": false,
 					"conf": {
-						"spark.dynamicAllocation.enabled": "true",
+						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "1",
-						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "f1695916-9413-4784-93f0-78fb2831133c"
+						"spark.dynamicAllocation.maxExecutors": "1",
+						"spark.autotune.trackingId": "109e41f4-9b31-481d-8f17-6b16cdc8aab3"
 					}
 				},
 				"metadata": {
@@ -181,16 +224,16 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/9230ca48-750c-4d03-a5c6-a58d6d6db49c/resourceGroups/5CLOU/providers/Microsoft.Synapse/workspaces/syws5clou/bigDataPools/poolperso",
-						"name": "poolperso",
+						"id": "/subscriptions/9230ca48-750c-4d03-a5c6-a58d6d6db49c/resourceGroups/5CLOU/providers/Microsoft.Synapse/workspaces/syws5clou/bigDataPools/sp5clou",
+						"name": "sp5clou",
 						"type": "Spark",
-						"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/poolperso",
+						"endpoint": "https://syws5clou.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sp5clou",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
 						},
 						"sparkVersion": "3.5",
-						"nodeCount": 10,
+						"nodeCount": 3,
 						"cores": 4,
 						"memory": 28
 					},
