@@ -375,11 +375,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"message": {
-						"value": "@activity('Copy_cnw').output.error.message",
+						"value": "@string(activity('Copy_cnw').output.error.message)",
 						"type": "Expression"
 					},
 					"errorCode": {
-						"value": "@activity('Copy_cnw').output.error.code",
+						"value": "@string(activity('Copy_cnw').output.error.code)",
 						"type": "Expression"
 					}
 				}
@@ -398,11 +398,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"message": {
-						"value": "@activity('Bronze to silver').output.error.code",
+						"value": "@string(activity('Bronze to silver').output.error.code)",
 						"type": "Expression"
 					},
 					"errorCode": {
-						"value": "@activity('Bronze to silver').output.error.message",
+						"value": "@string(activity('Bronze to silver').output.error.message)",
 						"type": "Expression"
 					}
 				}
@@ -421,11 +421,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"message": {
-						"value": "@activity('silver to gold').output.error.code",
+						"value": "@string(activity('silver to gold').output.error.code)",
 						"type": "Expression"
 					},
 					"errorCode": {
-						"value": "@activity('silver to gold').output.error.message",
+						"value": "@string(activity('silver to gold').output.error.message)",
 						"type": "Expression"
 					}
 				}
