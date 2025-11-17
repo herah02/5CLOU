@@ -38,15 +38,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/poolperso')]",
-			"type": "Microsoft.Synapse/workspaces/bigDataPools",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/AzureDataLakeStorage1')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -194,7 +185,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "bdcfa3c9-9149-4adb-a359-7b00f9c62360"
+						"spark.autotune.trackingId": "d9325cc1-4b05-40f7-8f01-b49200f06408"
 					}
 				},
 				"metadata": {
@@ -231,8 +222,6 @@
 						"source": [
 							"from pyspark.sql import SparkSession\n",
 							"from pyspark.sql.functions import col, lower, trim, regexp_replace, to_timestamp, year, month, dayofmonth, hour\n",
-							"\n",
-							"dbutils.fs.ls(\"abfss://dlfs5clou-raw@dl5clou.dfs.core.windows.net/\")\n",
 							"\n",
 							" \n",
 							"spark = SparkSession.builder.appName(\"BronzeToSilver\").getOrCreate()\n",
@@ -294,7 +283,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "b609ba9b-f362-4513-82e0-fd06567fa546"
+						"spark.autotune.trackingId": "e761fecd-ed03-4421-bb4c-7b75e85ad8b5"
 					}
 				},
 				"metadata": {
@@ -319,13 +308,15 @@
 						"sparkVersion": "3.5",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"from pyspark.sql import functions as F\n",
 							"df = spark.read.option(\"recursiveFileLookup\", \"true\").parquet(f\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/\")\n",
@@ -345,6 +336,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"\n",
 							"df_total_toots = (\n",
@@ -362,6 +354,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"from pyspark.sql.functions import explode, regexp_extract, split, col\n",
 							"# Extraire les hashtags\n",
