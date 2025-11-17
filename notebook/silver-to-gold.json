@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "277f578d-d3bf-481d-91bb-3030330b5f83"
+				"spark.autotune.trackingId": "adfb1c32-60c2-4b2d-b34b-9b6c97d04681"
 			}
 		},
 		"metadata": {
@@ -104,14 +104,6 @@
 					""
 				],
 				"execution_count": 17
-			},
-			{
-				"cell_type": "code",
-				"source": [
-					"spark.sql(\"SHOW TABLES IN Database1\").show()\n",
-					"spark.sql(\"SELECT * FROM Database1.active_users LIMIT 10;\").show()"
-				],
-				"execution_count": 18
 			}
 		]
 	}
