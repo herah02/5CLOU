@@ -64,13 +64,13 @@
 								"referenceName": "sp5clou",
 								"type": "BigDataPoolReference"
 							},
-							"executorSize": "Small",
+							"executorSize": "Medium",
 							"conf": {
-								"spark.dynamicAllocation.enabled": false,
+								"spark.dynamicAllocation.enabled": true,
 								"spark.dynamicAllocation.minExecutors": 1,
-								"spark.dynamicAllocation.maxExecutors": 1
+								"spark.dynamicAllocation.maxExecutors": 2
 							},
-							"driverSize": "Small",
+							"driverSize": "Medium",
 							"numExecutors": 1,
 							"authentication": {
 								"type": "MSI"
@@ -649,7 +649,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "1",
-						"spark.autotune.trackingId": "b065a7e8-7cd0-4234-bbb6-13a5f11ddf18"
+						"spark.autotune.trackingId": "b5416ed5-f32c-40de-b25e-6a0443baec03"
 					}
 				},
 				"metadata": {
@@ -674,15 +674,13 @@
 						"sparkVersion": "3.5",
 						"nodeCount": 5,
 						"cores": 8,
-						"memory": 56,
-						"automaticScaleJobs": true
+						"memory": 56
 					},
 					"sessionKeepAliveTimeout": 2
 				},
 				"cells": [
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"from pyspark.sql import SparkSession\n",
 							"from pyspark.sql.functions import col, lower, trim, regexp_replace, to_timestamp, year, month, dayofmonth, hour\n",
