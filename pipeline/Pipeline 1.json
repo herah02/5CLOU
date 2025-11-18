@@ -166,7 +166,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "timestamp",
-					"value": "@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}"
+					"value": {
+						"value": "@{formatDateTime(pipeline().TriggerTime,'yyyy')}/@{formatDateTime(pipeline().TriggerTime,'MM')}/@{formatDateTime(pipeline().TriggerTime,'dd')}\n\n",
+						"type": "Expression"
+					}
 				}
 			},
 			{
@@ -180,7 +183,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "file",
-					"value": "@{formatDateTime(pipeline().parameters.windowStart,'HH')}"
+					"value": {
+						"value": "@{formatDateTime(pipeline().TriggerTime,'HH')}",
+						"type": "Expression"
+					}
 				}
 			},
 			{
