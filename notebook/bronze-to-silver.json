@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "1",
 				"spark.dynamicAllocation.maxExecutors": "1",
-				"spark.autotune.trackingId": "34aa156e-5705-4e12-a5c0-a88ff5b10076"
+				"spark.autotune.trackingId": "d5629dbc-cdbe-41dc-9d28-c1e71fbb22c8"
 			}
 		},
 		"metadata": {
@@ -85,7 +85,7 @@
 					"    .parquet(\"abfss://dlfs5clou-clean@dl5clou.dfs.core.windows.net/clean/\")\n",
 					")"
 				],
-				"execution_count": 4
+				"execution_count": null
 			}
 		]
 	}
