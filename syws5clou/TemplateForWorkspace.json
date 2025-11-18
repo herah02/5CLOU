@@ -780,7 +780,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "1",
-						"spark.autotune.trackingId": "697296ab-2fda-44a5-98c5-52fa7a3ab3e3"
+						"spark.autotune.trackingId": "521d4b08-e748-4d02-a0d2-aaf21236a4fd"
 					}
 				},
 				"metadata": {
@@ -883,7 +883,7 @@
 							"# ================================\n",
 							"df_hashtags = (\n",
 							"    df.withColumn(\"hashtags_raw\",\n",
-							"                  F.regexp_replace(F.col(\"content_lower\"), \"[^#A-Za-z0-9_]\", \" \"))\n",
+							"                  F.regexp_replace(F.col(\"content_clean\"), \"[^#A-Za-z0-9_]\", \" \"))\n",
 							"      .withColumn(\"hashtags\", F.split(\"hashtags_raw\", \" \"))\n",
 							"      .withColumn(\"hashtag\", F.explode(\"hashtags\"))\n",
 							"      .filter(F.col(\"hashtag\").like(\"#%\"))\n",
