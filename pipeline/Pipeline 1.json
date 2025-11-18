@@ -31,13 +31,13 @@
 						"referenceName": "sp5clou",
 						"type": "BigDataPoolReference"
 					},
-					"executorSize": "Small",
+					"executorSize": "Medium",
 					"conf": {
-						"spark.dynamicAllocation.enabled": false,
+						"spark.dynamicAllocation.enabled": true,
 						"spark.dynamicAllocation.minExecutors": 1,
-						"spark.dynamicAllocation.maxExecutors": 1
+						"spark.dynamicAllocation.maxExecutors": 2
 					},
-					"driverSize": "Small",
+					"driverSize": "Medium",
 					"numExecutors": 1,
 					"authentication": {
 						"type": "MSI"
