@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "1",
 				"spark.dynamicAllocation.maxExecutors": "1",
-				"spark.autotune.trackingId": "af3cfe76-d32b-429d-bab5-a7b47ab65c58"
+				"spark.autotune.trackingId": "dc2e492c-1055-44da-90ff-2e90ee59364b"
 			}
 		},
 		"metadata": {
@@ -190,7 +190,7 @@
 					"      )\n",
 					")\n",
 					" \n",
-					"df_toots_daily.write.format(\"delta\").mode(\"overwrite\").saveAsTable(\"Database1.toots_daily\")"
+					"df_toots_daily.write.mode(\"overwrite\").saveAsTable(\"Database1.toots_daily\")"
 				],
 				"execution_count": 28
 			}
