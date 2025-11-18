@@ -649,7 +649,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "1",
-						"spark.autotune.trackingId": "a11663de-ae5c-496e-bebc-246bb78a9792"
+						"spark.autotune.trackingId": "1254b1d3-dbfb-418f-9c2f-93af357ec39b"
 					}
 				},
 				"metadata": {
@@ -705,7 +705,7 @@
 							"df = (\n",
 							"    df_raw\n",
 							"    .withColumn(\"id\", col(\"id\").cast(\"string\"))\n",
-							"    .withColumn(\"user_id\", col(\"user_id\").cast(\"string\"))\n",
+							"    .withColumn(\"account_id\", col(\"account_id\").cast(\"string\"))\n",
 							"    .withColumn(\"content\", col(\"content\").cast(StringType()))\n",
 							"    .withColumn(\"created_at\", to_timestamp(\"created_at\"))\n",
 							")\n",
