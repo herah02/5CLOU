@@ -1,0 +1,35 @@
+{
+	"name": "DestRaw",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage5clou",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			},
+			"folderPath": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folderPath",
+					"type": "Expression"
+				},
+				"fileSystem": "dlfs5clou-raw"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	}
+}
