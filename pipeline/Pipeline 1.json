@@ -3,9 +3,16 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Notebook1",
+				"name": "Bronze to silver",
 				"type": "SynapseNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Import API Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -38,11 +45,11 @@
 				}
 			},
 			{
-				"name": "Notebook2",
+				"name": "siver to gold",
 				"type": "SynapseNotebook",
 				"dependsOn": [
 					{
-						"activity": "Notebook1",
+						"activity": "Bronze to silver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -78,8 +85,182 @@
 						"type": "MSI"
 					}
 				}
+			},
+			{
+				"name": "Import API Data",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Set variable2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "apiMastodon",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestRaw",
+						"type": "DatasetReference",
+						"parameters": {
+							"fileName": {
+								"value": "@variables('file')",
+								"type": "Expression"
+							},
+							"folderPath": {
+								"value": "@variables('timestamp')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "timestamp",
+					"value": "@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}"
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "file",
+					"value": "@{formatDateTime(pipeline().parameters.windowStart,'HH')}"
+				}
+			},
+			{
+				"name": "Fail1",
+				"type": "Fail",
+				"dependsOn": [
+					{
+						"activity": "Import API Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"message": {
+						"value": "@activity('Import API Data').output.error.message",
+						"type": "Expression"
+					},
+					"errorCode": {
+						"value": "@activity('Import API Data').output.error.code",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Fail2",
+				"type": "Fail",
+				"dependsOn": [
+					{
+						"activity": "Bronze to silver",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"message": {
+						"value": "@activity('Bronze to silver').output.error.message",
+						"type": "Expression"
+					},
+					"errorCode": {
+						"value": "@activity('Bronze to silver').output.error.code",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Fail3",
+				"type": "Fail",
+				"dependsOn": [
+					{
+						"activity": "siver to gold",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"message": {
+						"value": "@activity('siver to gold').output.error.message",
+						"type": "Expression"
+					},
+					"errorCode": {
+						"value": "@activity('siver to gold').output.error.code",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"timestamp": {
+				"type": "String"
+			},
+			"file": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
