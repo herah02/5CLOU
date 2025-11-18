@@ -130,7 +130,149 @@
 							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"validateDataConsistency": true,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['created_at']"
+								},
+								"sink": {
+									"name": "created_at",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['visibility']"
+								},
+								"sink": {
+									"name": "visibility",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['language']"
+								},
+								"sink": {
+									"name": "language",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['replies_count']"
+								},
+								"sink": {
+									"name": "replies_count",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['reblogs_count']"
+								},
+								"sink": {
+									"name": "reblogs_count",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['favourites_count']"
+								},
+								"sink": {
+									"name": "favourites_count",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['quotes_count']"
+								},
+								"sink": {
+									"name": "quotes_count",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['content']"
+								},
+								"sink": {
+									"name": "content",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['id']"
+								},
+								"sink": {
+									"name": "account_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['username']"
+								},
+								"sink": {
+									"name": "username",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['display_name']"
+								},
+								"sink": {
+									"name": "display_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['bot']"
+								},
+								"sink": {
+									"name": "bot",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['group']"
+								},
+								"sink": {
+									"name": "group",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"path": "$['account']['created_at']"
+								},
+								"sink": {
+									"name": "account_created_at",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
 				},
 				"inputs": [
 					{
