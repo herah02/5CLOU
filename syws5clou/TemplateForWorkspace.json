@@ -299,7 +299,7 @@
 										},
 										"sink": {
 											"name": "account_created_at",
-											"type": "DateTime"
+											"type": "String"
 										}
 									}
 								],
@@ -881,14 +881,14 @@
 			"properties": {
 				"autoPause": {
 					"enabled": true,
-					"delayInMinutes": 15
+					"delayInMinutes": 5
 				},
 				"autoScale": {
 					"enabled": false,
 					"maxNodeCount": 15,
 					"minNodeCount": 3
 				},
-				"nodeCount": 5,
+				"nodeCount": 3,
 				"nodeSize": "Small",
 				"nodeSizeFamily": "MemoryOptimized",
 				"sparkVersion": "3.5",
