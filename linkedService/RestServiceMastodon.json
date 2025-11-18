@@ -1,16 +1,11 @@
 {
 	"name": "RestServiceMastodon",
 	"properties": {
-		"annotations": [],
 		"type": "RestService",
-		"typeProperties": {
-			"url": "https://mastodon.social",
-			"enableServerCertificateValidation": false,
-			"authenticationType": "Anonymous"
-		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
 			"type": "IntegrationRuntimeReference"
-		}
+		},
+		"annotations": []
 	}
 }
