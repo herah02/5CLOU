@@ -266,7 +266,7 @@
 								},
 								"sink": {
 									"name": "account_created_at",
-									"type": "DateTime"
+									"type": "String"
 								}
 							}
 						],
