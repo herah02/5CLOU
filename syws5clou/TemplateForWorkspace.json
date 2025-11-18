@@ -780,7 +780,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "1",
-						"spark.autotune.trackingId": "f28eef54-e992-4a19-8604-809e8daf8526"
+						"spark.autotune.trackingId": "697296ab-2fda-44a5-98c5-52fa7a3ab3e3"
 					}
 				},
 				"metadata": {
@@ -845,7 +845,7 @@
 							"      .agg(\n",
 							"          F.count(\"*\").alias(\"toots_count\"),\n",
 							"          F.avg(\"content_length\").alias(\"avg_length\"),\n",
-							"          (F.sum(F.size(F.split(\"content_lower\", \"#\")) - 1)).alias(\"hashtag_count\"),\n",
+							"          (F.sum(F.size(F.split(\"content_clean\", \"#\")) - 1)).alias(\"hashtag_count\"),\n",
 							"          F.countDistinct(\"event_date\").alias(\"active_days\"),\n",
 							"          F.min(\"created_at\").alias(\"first_toot\"),\n",
 							"          F.max(\"created_at\").alias(\"last_toot\"),\n",
