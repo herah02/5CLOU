@@ -1,0 +1,25 @@
+{
+	"name": "Trigger5clou",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Pipeline 1",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2025-11-19T09:00:00",
+				"endTime": "2025-11-19T15:00:00",
+				"timeZone": "Romance Standard Time"
+			}
+		}
+	}
+}
